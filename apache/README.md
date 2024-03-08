@@ -1,38 +1,29 @@
-Role Name
-=========
+## Ansible Playbook Description
 
-A brief description of the role goes here.
+This Ansible playbook is designed to automate the installation and configuration of an Apache HTTP server (`httpd`) on managed hosts. It also configures the firewall to permit traffic for the HTTPS service and copies an `index.html` file to the managed host.
 
-Requirements
-------------
+### Playbook Tasks:
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. **Install HTTPD**:
+   - Use the `yum` module to install the Apache HTTP server (`httpd`) on the managed host.
 
-Role Variables
---------------
+2. **Start and Enable HTTPD**:
+   - Use the `systemd` module to start and enable the `httpd` service, ensuring that it starts on boot.
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+3. **Permit Traffic in Default Zone for HTTPS Service**:
+   - Use the `firewalld` module to permit traffic in the default zone for the HTTPS service.
+   - The port to be opened is dynamically determined based on the `http_port` variable.
+   - After configuring the firewall, a notification is sent to reload the `firewalld` service.
 
-Dependencies
-------------
+4. **Copy `index.html` File to the Managed Host**:
+   - Use the `copy` module to copy an `index.html` file from the source location (`{{ html_page_src }}`) to the destination location on the managed host (`{{ html_page_dest }}`).
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+### Usage:
+To use this playbook:
+1. Make sure Ansible is installed on your control node.
+2. Update the inventory file (`hosts`) with the IP addresses or hostnames of your managed hosts.
+3. Update the `group_vars` or `host_vars` files with the appropriate variables (`http_port`, `html_page_src`, `html_page_dest`) for your environment.
+4. Run the playbook using the `ansible-playbook` command:
 
-Example Playbook
-----------------
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
-
-License
--------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+   ```bash
+   ansible-playbook playbook.yml -i hosts

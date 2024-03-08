@@ -1,4 +1,4 @@
-## Ansible Playbook Descriptions
+## Ansible Roles Descriptions
 
 ### HTTPD Installation and Configuration
 

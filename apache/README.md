@@ -18,12 +18,3 @@ This Ansible playbook is designed to automate the installation and configuration
 4. **Copy `index.html` File to the Managed Host**:
    - Use the `copy` module to copy an `index.html` file from the source location (`{{ html_page_src }}`) to the destination location on the managed host (`{{ html_page_dest }}`).
 
-### Usage:
-To use this playbook:
-1. Make sure Ansible is installed on your control node.
-2. Update the inventory file (`hosts`) with the IP addresses or hostnames of your managed hosts.
-3. Update the `group_vars` or `host_vars` files with the appropriate variables (`http_port`, `html_page_src`, `html_page_dest`) for your environment.
-4. Run the playbook using the `ansible-playbook` command:
-
-   ```bash
-   ansible-playbook playbook.yml -i hosts
